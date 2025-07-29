@@ -47,4 +47,31 @@ jobs:
         with:
           name: node-app-build-v${{ matrix.node }}
           path: ./dist
-        
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME_SRICHARAN4444 }}
+          password: ${{ secrets.DOCKER_PASSWORD_SRICHARAN4444 }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: node-app-build-v18
+          path: ./build
+
+      - name: Build Docker image
+        working-directory: .
+        run: |
+          docker build -t node-artifact-demo-v18 .
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/node-artifact-demo-v18
+          docker tag node-artifact-demo-v18:latest $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:latest
