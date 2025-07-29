@@ -48,6 +48,7 @@ jobs:
           name: node-app-build-v${{ matrix.node }}
           path: ./dist
   docker:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
