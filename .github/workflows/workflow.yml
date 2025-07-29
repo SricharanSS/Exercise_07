@@ -81,7 +81,7 @@ jobs:
   deploy:
     needs: docker
     runs-on: ubuntu-latest
-    environment: !e  "${{ github.ref_name }}==main? production: ${{ github.ref_name }}==dev? development: development"
+    environment: "!e ${{ github.ref_name }}==main? production: ${{ github.ref_name }}==dev? development: development"
     steps:
       - name: PRINT ENV VARIABLES
         run: |
