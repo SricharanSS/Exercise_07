@@ -1,7 +1,7 @@
 name: Exercise_07
 on:
   push:
-    branches: [main, develop]
+    branches: [main, development]
 
 jobs:
   test:
