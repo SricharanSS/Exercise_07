@@ -22,4 +22,10 @@ jobs:
       
       - name: Build Project
         run: npm run build
+
+      - name: Upload Dist Folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: node-app-build
+          path: ./dist
         
