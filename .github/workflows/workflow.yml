@@ -4,7 +4,26 @@ on:
     branches: [main, develop]
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [16, 18]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Test (Node v${{ matrix.node }})
+        run: npm test
   build:
+    needs: test
     runs-on: ubuntu-latest
     strategy:
       matrix:
